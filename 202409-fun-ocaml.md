@@ -169,6 +169,22 @@ Cécile Herbelin]{style="font-size: smaller;"}
 </slip-slip>
 
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body style="margin-top: 0;">
+
+## Example app: Be Sport
+
+The sports social network
+[https://besport.com/news](https://besport.com/news)
+
+
+<img alt="Ocsigen" src="besport1.png" width="67%" style="position: absolute;bottom: 0;right: 50px;border: 1px solid #444;"/>
+
+<img alt="Ocsigen" src="besport2.png" width="350px" style="position: absolute;bottom: 60px;left: 110px;border: 1px solid #444;"/>
+
+  </slip-body>
+</slip-slip>
+
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
 ## [Step 2:]{.step} Ocsigen Server
@@ -581,12 +597,12 @@ let%client () = ... let%lwt v = f 22 in ...
 
 ### Client-values: inserting client-side code in your pages 
 
-{.server}
+{.server #onclick}
 ```ocaml
 button ~a:[a_onclick [%client (fun ev -> ... )]] [ ... ]
 ```
 
-{.shared .b .bb}
+{.shared .b .bb #lwt_js_events}
 ```ocaml
 let%shared mybutton s =
   let b = button [txt "click"] in
@@ -632,43 +648,130 @@ which is called when the page is received.
 
 Hints:
 * This time, we won't submit the form to a new service, but use a RPC
-* Take example either on the [#onclick](onclick) example above or 
-  use [#lwt_js_events](Lwt_js_events).
+* Take example either on the [onclick]{} example above or 
+  use [Lwt_js_events]{}.
 
   </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-markdown content for the inside slip
+## Sending a message to the client
+
+Eliom has several ways to do server to client communication.
+
+Here we will use module `Eliom_notif`.
+It gives you the possibility to define resources on which user can *listen*
+or *notify*.
+
+On server side, instanciate functor `Os_notif.Make_Simple`.
+Type `key` is for resource ids. Type `notification` is for the messages
+you want to send.
+{.server}
+```ocaml
+module%server Notif = Os_notif.Make_Simple (struct
+  type key = ...
+  type notification = ...
+end)
+```
+Call `Notif.listen` from server side 
+if you want to be notified when there is a new message send on a resource.
+
+If you want to send a message to all users listening on a given resource, call function `Notif.notify` from server side.
+
+On client side, `~%(Notif.client_ev ())` is a React event of type 
+`(key, notif) React.E.t`. Use it to receive the messages.
+
+Example:
+
+{.client}
+```ocaml
+React.E.map (fun notification -> ...) ~%(Notif.client_ev ()) 
+```
 
   </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-markdown content for the inside slip
+## [Step 6:]{.step} Send a message to another user
+
+{.Exo}
+>Make it possible to send a message to another user connected on the same server.
+>
+>Modify your form to have two fields: one for the recipient name, and one for the message.
+>Change your RPC accordingly.
+>
+>Display the messages you receive in the page.
+
+Make sure that you receive only the message sent to you.
+
+Hints:
+1. Use module [](`Manip`) to append the new element to the page
+2. To_dom.of_element
 
   </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-markdown content for the inside slip
+## Ocsigen Toolkit
+
+{style="height: 700px;"}
+
+<img alt="Ocsigen" src="toolkit-cal.png" width="400px" style="position: absolute; top: 200px; right: 100px;"/>
+<img alt="Ocsigen" src="toolkit-tabs.png" width="400px" style="position: absolute; top: 550px; left: 100px;"/>
+<img alt="Ocsigen" src="toolkit-tip.png" width="400px" style="position: absolute; top: 300px; left: 500px;"/>
+<img alt="Ocsigen" src="toolkit-tongue.png" width="400px" style="position: absolute; top: 700px; right: 300px;"/>
+
 
   </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-markdown content for the inside slip
+## Ocsigen Start
+
+**Library**<br/>
+user management, passwords, etc. 
+
+**Application template**
+
+**Code samples**
+
+{style="height: 200px;"}
+
+```bash
+eliom-distillery --template os.pgocaml -name myapp
+```
+Then read the README file
+
+<img alt="Ocsigen" src="start1.png" width="500px" style="position: absolute; top: 100px; right: 100px;"/>
+<img alt="Ocsigen" src="start2.png" width="500px" style="position: absolute; top: 200px; right: 300px;"/>
+<img alt="Ocsigen" src="start3.png" width="500px" style="position: absolute; top: 300px; right: 200px;"/>
+<img alt="Ocsigen" src="start-mobile-1.png" width="250px" style="position: absolute; top: 500px; right: 240px; border: 1px solid #ddd;"/>
+<img alt="Ocsigen" src="start-mobile-4.png" width="250px" style="position: absolute; top: 600px; right: 50px; border: 1px solid #ddd;"/>
 
   </slip-body>
 </slip-slip>
-<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+<slip-slip style="width: 33.33%; overflow: hidden;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-markdown content for the inside slip
+<img alt="Ocsigen" src="mob.jpeg" width="140%" style="position: absolute; top: 0px; left: -820px;"/>
+
+{style="width: 500px; position: absolute; right: 0;"}
+>## Mobile apps
+>Code run in a webview
+>Cordova or Capacitor
+>
+>Pages generated on client-side
+>
+>Exact same code
+>as the Web app
+>
+>Use Ocsigen Start to test
+
+{style="height: 1900px;"}
 
   </slip-body>
 </slip-slip>

@@ -1,0 +1,421 @@
+<style>
+slip-slipshow>slip-slip>.slip-scale-container>.slip-container>slip-body {
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+slip-body {
+  font-family: "Ubuntu";
+  line-height: 1.4;
+  margin: 0;
+  color: #555;
+}
+a { color: #0c4481; }
+code { font-size: smaller; }
+.columns {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.col {
+    align-self: center;
+}
+#title { position: relative; }
+#title img { width: 1000px; }
+#mainh1 {
+    flex: 4 1;
+    text-align: center;
+}
+.vspace { height: 1em; }
+.hidden { position:absolute; visibility: hidden; }
+.center { text-align: center; }
+.smaller { font-size: smaller; }
+.encadré { 
+  position: relative; 
+  background-color: #ffccaa;
+  border-radius: 12px;
+  color: black;
+  padding: 20px;
+}
+.encadré p { margin: 0; }
+.step {
+  font-style: italic;
+  font-size: smaller;
+  background-color: #a0d0fa;
+  color: white;
+  padding: 4px 25px;
+  margin-right: 22px;
+  display: inline-block;
+  border-radius: 12px;
+  }
+.hljs-deletion, .hljs-number, .hljs-quote, .hljs-selector-class, .hljs-selector-id, .hljs-template-tag, .hljs-type { color: #2788f1; }
+.hljs-string { color: #e88; }
+#scopes:before {
+  content: '⬉';
+  position: absolute;
+  top: -90px;
+  left: -62px;
+  font-weight: bold;
+  font-size: 100px;
+  color: #ee5522;
+}
+</style>
+
+
+{.columns #title}
+>{.col style="flex: 0 0;"}
+>> ![Ocsigen](ocsigen-bubbles-large.png)
+>{.col #mainh1}
+>> # Ocsigen<br/> Quickstart<br/> guide
+>>
+>>{.vspace}
+>> Vincent Balat
+>>{.vspace}
+>>
+>>{.vspace}
+>>
+>>{.vspace}
+>>
+>> FUN-OCaml - Berlin<br/> Sep 16-17 2024
+
+
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 1:]{.step} Install
+
+```bash
+$ opam install ocsigen-start ocsipersist-sqlite-config
+```
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+
+[//]: ![Ocsigen](ocsigen-bubbles-large.png)
+[//]: ![Ocsigen](be-ocsigenlogo.svg)
+
+
+{style="position: relative; font-weight: bold; font-size: larger; color: #0c4481;"}
+>{.center}
+>><img alt="Ocsigen" src="be-ocsigenlogo.svg" width="200px"/><br/>
+>><img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="800px"/>
+>
+>{style="position: absolute; top: 100px; left: 960px;"}
+>Ocsigen Server
+>
+>{#aaa style="position: absolute; top: 320px; left: 1000px;"}
+>Eliom
+>
+>{style="position: absolute; top: 520px; left: 940px;"}
+>Js_of_ocaml
+>
+>{style="position: absolute; top: 700px; left: 800px;"}
+>Tyxml
+>
+>{style="position: absolute; top: 700px; left: 370px;"}
+>Lwt
+>
+>{style="position: absolute; top: 150px; left: 20px;"}
+>Ocsigen Start
+>
+>{style="position: absolute; top: 350px; left: -30px;"}
+>Ocsigen Toolkit
+>
+>{style="position: absolute; top: 540px; left: 50px;"}
+>Ocsigen i18n
+
+{pause up-at-unpause=aaa}
+
+{.vspace}
+
+{.center style="font-size: smaller;"}
+Jérôme Vouillon, Vincent Balat<br/>
+Pierre Chambart, Grégoire Henry, Benedikt Becker,<br/>
+Vasilis Papavasileiou, Gabriel Radanne, Hugo Heuzard,<br/>
+Benjamin Canou, Boris Yakobowski, Jan Rochel, Idir Lankri,<br/> 
+Jérémie Dimino, Romain Calascibetta, Raphaël Proust, Anton Bachin, Baptiste Strazzulla,<br/>
+Julien Sagot, Stéphane Glondu, Gabriel Kerneis, Denis Berthod, Thorsten Ohl,<br/>
+Danny Willems, Kate Deplaix, Enguerrand Decorne, Grégoire Lionnet, <br/>
+Jaap Boender, Gabriel Scherer, Gabriel Cardoso, Yuta Sato, Sora Morimoto,<br/>
+Christophe Lecointe, Arnaud Parant, Jérôme Maloberti, Charly Chevalier, <br/>
+[Jean-Henri Granarolo, Simon Castellan, Barbara Lepage, Séverine Maingaud,<br/>
+Mauricio Fernandez, Michael Laporte, Nataliya Guts, Archibald Pontier,<br/>
+Jérôme Velleine, Charles Oran, Pierre Clairambault,
+Cécile Herbelin]{style="font-size: smaller;"}
+…
+
+  </slip-body>
+</slip-slip>
+
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 2:]{.step} Ocsigen Server
+
+### As an executable
+
+```bash
+$ ocsigenserver -c config
+```
+Where `config` is something like:
+
+```bash
+<ocsigen>
+  <server>
+    <port>8080</port>
+    <commandpipe>local/var/run/mysite-cmd</commandpipe>
+    <logdir>local/var/log/mysite</logdir>
+    <datadir>local/var/data/mysite</datadir>
+    <charset>utf-8</charset>
+    <debugmode/>
+    <extension findlib-package="ocsigenserver.ext.staticmod"/>
+    <host hostfilter="mydomain.com">
+      <static dir="local/var/www/staticdir"/>
+    </host>
+  </server>
+</ocsigen>
+```
+
+{pause #lib up-at-unpause=lib}
+
+{.vspace}
+
+### As an OCaml library
+
+```ocaml
+let () =
+  Ocsigen_server.start 
+       [ Ocsigen_server.host [Staticmod.run ~dir:"static" ()]]
+```
+Example of Dune file for this program:
+
+```bash
+(executable
+ (public_name myproject)
+ (name main)
+ (libraries
+  ocsigenserver
+  ocsigenserver.ext.staticmod))
+```
+Compile with:
+```
+dune build
+```
+
+Find more complex configuration examples in the
+[manual](https://ocsigen.org/ocsigenserver/latest/manual/staticlink)
+
+  </slip-body>
+</slip-slip>
+
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 3:]{.step} Generating pages with Eliom
+
+Create a new project:
+```bash
+$ dune init proj --kind=lib mysite
+$ cd mysite
+```
+{.pause}
+
+Define a service in `bin/main.ml`:
+
+{#servunit}
+```ocaml
+let myservice =
+  Eliom_service.create
+    ~path:(Eliom_service.Path ["foo"])
+    ~meth:(Eliom_service.Get Eliom_parameter.unit)
+    ()
+```
+{.hidden #servparam}
+```ocaml
+let myservice =
+  Eliom_service.create
+    ~path:(Eliom_service.Path ["foo"])
+    ~meth:(Eliom_service.Get (Eliom_parameter.(string "myparam" ** int "i")))
+    ()
+```
+Register a handler:
+
+{#regunit}
+```ocaml
+let () =
+  Eliom_registration.Html.register ~service:myservice
+    (fun () () ->
+      Lwt.return
+         Eliom_content.Html.F.(html (head (title (txt "The title")) [])
+                                    (body [h1 [txt "Hello"]])))
+```
+
+{.hidden #regparam}
+```ocaml
+let () =
+  Eliom_registration.Html.register ~service:myservice
+    (fun (myparam, _i) () ->
+      Lwt.return
+         Eliom_content.Html.F.(html (head (title (txt "The title")) [])
+                                    (body [h1 [txt myparam]])))
+```
+
+{.hidden #regparam2}
+```ocaml
+let () =
+  Eliom_registration.File.register ~service:myservice
+    (fun (_myparam, _i) () ->
+      Lwt.return "filename")
+```
+
+{.hidden #regparam3}
+```ocaml
+let () =
+  let a = ref 0 in
+  Eliom_registration.Action.register ~service:myservice
+    (fun (myparam, _i) () ->
+      a := a + 1;
+      Lwt.return ())
+```
+
+{.hidden #regparam4}
+```ocaml
+let () =
+  Eliom_registration.Html.register ~service:myservice
+    (fun (myparam, _i) () ->
+      Lwt.return ([%html{|<html><head><title></title></head>
+                            <body><h1>Hello</h1></body>
+                          </html>|})
+```
+
+{.hidden #regparam5}
+```ocaml
+let () =
+  Eliom_registration.Html.register ~service:myservice
+    (fun (myparam, _i) () ->
+      Lwt.return
+         Eliom_content.Html.F.(html (head (title (txt "The title")) [])
+                                    (body [p [p [txt myparam]]])))
+                                              ^^^^^^^^^^^^^^^
+Error: This expression has type [> p ] elt = 'a elt
+       but an expression was expected of type [< p_content ] elt = 'b elt
+
+       Type 'a = [> `P ] is not compatible with type
+            'b = [< `A of phrasing_without_interactive
+                  | `Abbr
+                  | `Audio of phrasing_without_media
+                  ...
+                  | `Output
+                  | `PCDATA
+                  | `Progress
+                  | `Q
+                  ...
+                  | `Wbr ]
+
+     The second variant type does not allow tag(s) `P
+```
+
+{pause #tyxmlend down-at-unpause=sdkjf}
+
+Start the server with static files and Eliom:
+
+```ocaml
+let () = 
+  Ocsigen_server.start 
+    ~command_pipe:"local/var/run/mysite-cmd"
+    ~logdir:"local/var/log/mysite"
+    ~datadir:"local/var/data/mysite"
+    ~default_charset:(Some "utf-8")
+    [
+      Ocsigen_server.host
+       [ Staticmod.run ~dir:"local/var/www/mysite" ()
+       ; Eliom.run () ]
+    ]
+```
+{pause #sdkjf down-at-unpause=servicesdown}
+
+Add packages `ocsipersist-sqlite` and `eliom.server` to file `bin/dune`, in the "libraries" section.
+
+Compile and run:
+```bash
+$ dune exec mysite
+```
+{pause focus-at-unpause=servunit}
+
+{pause unstatic-at-unpause="servunit" static-at-unpause="servparam"}
+
+{pause focus-at-unpause=regunit}
+
+{pause unstatic-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam}
+
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2}
+
+{pause unstatic-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3}
+
+{pause unstatic-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam}
+
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4}
+
+{pause unstatic-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam}
+
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5}
+
+{pause down-at-unpause="tyxmlend" unfocus-at-unpause="regparam5"}
+
+{#servicesdown}
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 4:]{.step} Sessions: scoped references
+
+{#eref1}
+```ocaml
+let r = 
+  Eliom_reference.eref
+     ~scope:Eliom_common.default_session_scope 0
+
+
+let f () =
+  let%lwt v = Eliom_reference.get r in
+  Eliom_reference.set r (v + 1);
+```
+
+{#eref2 .hidden}
+```ocaml
+let r = 
+  Eliom_reference.eref
+     ~persistent:"myrefname"
+     ~scope:Eliom_common.default_session_scope 0
+
+let f () =
+  let%lwt v = Eliom_reference.get r in
+  Eliom_reference.set r (v + 1);
+```
+
+{pause unstatic-at-unpause="eref1" static-at-unpause="eref2"}
+
+{pause}
+
+{.encadré #scopes style="width:550px; left:650px; top:-140px; "}
+>|**Request**|`request_scope`|
+>|**Tab**|`default_process_scope`|
+>|**Session**|`default_session_scope`|
+>|**Session group**|`default_group_scope`|
+>|**Site**|`site_scope`|
+>|**Global**|`global_scope`|
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+markdown content for the inside slip
+
+  </slip-body>
+</slip-slip>

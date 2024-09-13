@@ -38,6 +38,14 @@ code { font-size: smaller; }
   padding: 20px;
 }
 .encadré p { margin: 0; }
+.exo { 
+  background-color: #f8f8f8;
+  border-left: solid 12px #ffccaa;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
+  color: black;
+  padding: 10px 40px;
+}
 .step {
   font-style: italic;
   font-size: smaller;
@@ -48,6 +56,16 @@ code { font-size: smaller; }
   display: inline-block;
   border-radius: 12px;
   }
+code { border-radius: 12px; }
+.server code { background-color: #ddeeff; }
+.client code { background-color: #ffffdd; }
+.shared code { background-color: #eeffee; }
+pre.b { margin-bottom: 0; }
+pre.b code { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+pre.bb code { padding-bottom: 0; }
+pre.t { margin-top: 0; }
+pre.t code { border-top-left-radius: 0; border-top-right-radius: 0; }
+pre.tt code { padding-top: 0; }
 .hljs-deletion, .hljs-number, .hljs-quote, .hljs-selector-class, .hljs-selector-id, .hljs-template-tag, .hljs-type { color: #2788f1; }
 .hljs-string { color: #e88; }
 #scopes:before {
@@ -185,6 +203,7 @@ Where `config` is something like:
 
 ### As an OCaml library
 
+{.server}
 ```ocaml
 let () =
   Ocsigen_server.start 
@@ -225,7 +244,7 @@ $ cd mysite
 
 Define a service in `bin/main.ml`:
 
-{#servunit}
+{#servunit .server}
 ```ocaml
 let myservice =
   Eliom_service.create
@@ -233,7 +252,7 @@ let myservice =
     ~meth:(Eliom_service.Get Eliom_parameter.unit)
     ()
 ```
-{.hidden #servparam}
+{.hidden #servparam .server}
 ```ocaml
 let myservice =
   Eliom_service.create
@@ -243,7 +262,7 @@ let myservice =
 ```
 Register a handler:
 
-{#regunit}
+{#regunit .server}
 ```ocaml
 let () =
   Eliom_registration.Html.register ~service:myservice
@@ -253,7 +272,7 @@ let () =
                                     (body [h1 [txt "Hello"]])))
 ```
 
-{.hidden #regparam}
+{.hidden #regparam .server}
 ```ocaml
 let () =
   Eliom_registration.Html.register ~service:myservice
@@ -263,7 +282,7 @@ let () =
                                     (body [h1 [txt myparam]])))
 ```
 
-{.hidden #regparam2}
+{.hidden #regparam2 .server}
 ```ocaml
 let () =
   Eliom_registration.File.register ~service:myservice
@@ -271,7 +290,7 @@ let () =
       Lwt.return "filename")
 ```
 
-{.hidden #regparam3}
+{.hidden #regparam3 .server}
 ```ocaml
 let () =
   let a = ref 0 in
@@ -281,7 +300,7 @@ let () =
       Lwt.return ())
 ```
 
-{.hidden #regparam4}
+{.hidden #regparam4 .server}
 ```ocaml
 let () =
   Eliom_registration.Html.register ~service:myservice
@@ -291,7 +310,7 @@ let () =
                           </html>|})
 ```
 
-{.hidden #regparam5}
+{.hidden #regparam5 .server}
 ```ocaml
 let () =
   Eliom_registration.Html.register ~service:myservice
@@ -322,6 +341,7 @@ Error: This expression has type [> p ] elt = 'a elt
 
 Start the server with static files and Eliom:
 
+{.server}
 ```ocaml
 let () = 
   Ocsigen_server.start 
@@ -372,9 +392,9 @@ $ dune exec mysite
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-## [Step 4:]{.step} Sessions: scoped references
+## Sessions: scoped references
 
-{#eref1}
+{#eref1 .server}
 ```ocaml
 let r = 
   Eliom_reference.eref
@@ -386,7 +406,7 @@ let f () =
   Eliom_reference.set r (v + 1);
 ```
 
-{#eref2 .hidden}
+{#eref2 .hidden .server}
 ```ocaml
 let r = 
   Eliom_reference.eref
@@ -409,6 +429,239 @@ let f () =
 >|**Session group**|`default_group_scope`|
 >|**Site**|`site_scope`|
 >|**Global**|`global_scope`|
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 4:]{.step} Implement a basic login mechanism
+
+{.exo}
+>On your main page, add a form with a single text input field for a user name.
+>
+>Submiting this form sends the user name to a POST service, that will register your user name.
+>
+>When the user name is already known, your main page displays this name, and a logout button.
+
+{pause}
+
+Hints:
+* See an example of form <a target="_blank" href="">here</a>
+* See an example of POST service <a target="_blank" href="">here</a>
+* Use an **action** (service with no output, that will just redisplay the page after perfoming a side-effect) to set a scoped reference with the user name
+* To close the session use function <a target="_blank" href="">`Eliom_state.discard_all`</a>
+
+Test your app with several browsers to check that you can have several users simultaneously.
+
+{pause down-at-unpause=endstep4}
+
+{.exo}
+Advanced version: instead of using a reference with scope session,
+create a session group whose name is the user name.
+Check that you can share session data across multiple browsers.
+
+{#endstep4}
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%; overflow: hidden;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+<img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="1200px" style="position: absolute; top: -650px; right: -300px;"/>
+
+## Service, reinvented
+
+Services have many other features:
+* Services can be identified by a **path**<br/>
+and/or by a name 
+added automatically by Eliom as (GET or POST) parameter
+* **Secure services** (csrf-safe, secure sessions, https only …)
+* **Dynamic creation of services** [Continuation based Web Programming]{.encadré  style="position: relative; left: 40px; top: 20px;"}
+  * Scoped services (?scope)
+  * Temporary services (?max_use, ?timeout …)
+
+{.vspace}
+
+{pause}
+
+Example:
+1. A user submit a form with some data
+2. You ask Eliom to create dynamically a new temporary service, identified by an auto-generated name,
+
+The form data will be saved in the closure!
+
+[Functional Web Programming!]{.encadré style="position: relative; left: 700px; top: -100px;"}
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## Running code on the client
+
+With Eliom, you can write a client-server Web and mobile app as a single
+distributed app!<br/>
+To do that, you need a dedicated buid system.<br/>
+Use the default basic application template provided by Eliom to get it:
+
+```bash
+eliom-distillery --template app.exe -name myapp
+```
+Have a look at files `myapp.eliom` and `myapp_main.eliom`.
+
+Insert the following line in `myapp.eliom`:
+
+{.client}
+```ocaml
+let%client () = print_endline "Hello";
+```
+See the result in your browser's console.
+
+<div style="display: flex; justify-content: space-around;">
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body>
+
+{#clser}
+>{.server}
+>```ocaml
+>let%server () = ...
+>```
+>{.client}
+>```ocaml
+>let%client () = ...
+>```
+>{.shared}
+>```ocaml
+>let%client () = ...
+>```
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body style="text-align: center;">
+<img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
+</div>
+
+
+{pause down-at-unpause=clientdown1}
+
+### Injections: using server-side values in client side code
+
+{.server .b}
+```ocaml
+let%server message = "Hello";
+```
+{.client .t}
+```ocaml
+let%client () = print_endline ~%message;
+```
+
+The values are send together with the page (Eliom never calls the server if you don't ask to).
+
+{#clientdown1}
+
+{pause down-at-unpause=clientdown2}
+
+### RPC: calling a server-side function
+
+{.server .b}
+```ocaml
+let%rpc f (i : int) : unit Lwt.t = Lwt.return (i + 10)
+```
+{.client .t}
+```ocaml
+let%client () = ... let%lwt v = f 22 in ...
+```
+{#clientdown2}
+
+{pause down-at-unpause=clientdown3}
+
+### Client-values: inserting client-side code in your pages 
+
+{.server}
+```ocaml
+button ~a:[a_onclick [%client (fun ev -> ... )]] [ ... ]
+```
+
+{.shared .b .bb}
+```ocaml
+let%shared mybutton s =
+  let b = button [txt "click"] in
+  let _ =
+```
+{.client .t .b .tt .bb}
+```ocaml
+    [%client Lwt_js_events.clicks ~%b 
+               (fun ev -> Dom_html.window##alert(Js.string ~%s))
+    ]
+```
+{.shared .t .tt}
+```ocaml
+  in
+  d
+```
+
+The code is actually included in the client-side program as a function,
+which is called when the page is received.
+
+{#clientdown3}
+
+<div style="display: flex; justify-content: space-around;">
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body style="text-align: center;">
+<img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
+</div>
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 5:]{.step} Send a message to the server
+
+{.exo}
+> Add a text input field in the connected version of your page,
+> with a submit button, that will send the message to the server.
+>
+> The server will just display the message in its console
+
+Hints:
+* This time, we won't submit the form to a new service, but use a RPC
+* Take example either on the [#onclick](onclick) example above or 
+  use [#lwt_js_events](Lwt_js_events).
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+markdown content for the inside slip
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+markdown content for the inside slip
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+markdown content for the inside slip
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+markdown content for the inside slip
 
   </slip-body>
 </slip-slip>

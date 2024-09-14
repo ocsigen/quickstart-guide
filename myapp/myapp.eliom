@@ -1,4 +1,7 @@
+open%client Eliom_content.Html
 open%shared Eliom_content.Html.D
+open%client Js_of_ocaml_lwt
+open%client Js_of_ocaml
 
 let%server () = Ocsipersist_settings.set_db_file "local/var/data/myapp/myapp_db"
 let%server application_name = "myapp"
@@ -53,20 +56,36 @@ let%server get_username () = Eliom_reference.get username
 let%client get_username () = Lwt.return !username
 
 let%shared main_page_not_connected () =
+  let open Eliom_content.Html.D in
   [ h1 [txt "Welcome to Eliom!"]
-  ; (let open Eliom_content.Html.F in
-     Form.post_form ~service:connection_service
-       (fun name ->
-          [ Form.input ~input_type:`Text ~name Form.string
-          ; Form.input ~input_type:`Submit ~value:"Login" Form.string ])
-       ()) ]
+  ; Form.post_form ~service:connection_service
+      (fun name ->
+         [ Form.input ~input_type:`Text ~name Form.string
+         ; Form.input ~input_type:`Submit ~value:"Login" Form.string ])
+      () ]
+
+let%rpc send_message (msg : string) : unit Lwt.t =
+  print_endline msg; Lwt.return ()
+
+let%shared chat () =
+  let i = input ~a:[a_input_type `Text] () in
+  let b = input ~a:[a_input_type `Submit; a_value "Send"] () in
+  ignore
+    [%client
+      (Lwt.async (fun () ->
+         Lwt_js_events.clicks (To_dom.of_element ~%b) (fun _ _ ->
+           send_message (Js.to_string (To_dom.of_input ~%i)##.value)))
+       : unit)];
+  div ~a:[a_class ["chat"]] [i; b]
 
 let%shared main_page_connected name =
+  let open Eliom_content.Html.D in
   [ h1 [txt "Welcome "; txt name; txt "!"]
   ; Form.post_form ~service:disconnection_service
       (fun () -> [Form.input ~input_type:`Submit ~value:"Logout" Form.string])
       ()
-  ; a ~service:second_service [txt "second page"] () ]
+  ; a ~service:second_service [txt "second page"] ()
+  ; chat () ]
 
 (* init has a different implentation on the server and on the client.
    The server version will be called when the page in generated on

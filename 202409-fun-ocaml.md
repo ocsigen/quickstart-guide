@@ -728,9 +728,12 @@ Hints:
 1. For that version, we will keep regular HTML forms with actions implemented
 on the server only (which means that the app will restart with a server-side
 generated page every time you connect or disconnect).
-2. To keep the username on client side, use a regular reference. 
+2. To keep the username on client side, use a regular reference.
    The connection service handler must set both the server-side scoped reference and
    the client-side reference (using a client-value).
+   This client-side reference must also be set every time the client process starts,
+   that is, when a page is generated on the server (subsequent pages are generated
+   on the client, without stopping the client-side process).
 
 
 
@@ -765,14 +768,16 @@ Here we will use module `Eliom_notif`.
 It gives you the possibility to define resources on which user can *listen*
 or *notify*.
 
-On server side, instanciate functor `Os_notif.Make_Simple`.
+On server side, instanciate functor `Eliom_notif.Make_Simple`.
 Type `key` is for resource ids. Type `notification` is for the messages
 you want to send.
 {.server}
 ```ocaml
-module%server Notif = Os_notif.Make_Simple (struct
+module%server Notif = Eliom_notif.Make_Simple (struct
+  type identity = ...
   type key = ...
   type notification = ...
+  let get_identity = ...
 end)
 ```
 Call `Notif.listen` from server side 

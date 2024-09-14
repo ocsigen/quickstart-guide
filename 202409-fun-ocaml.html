@@ -2136,9 +2136,14 @@ let f () =
   <slip-body>
 <h2 id="implement-a-basic-login-mechanism"><a class="anchor" aria-hidden="true" href="#implement-a-basic-login-mechanism"></a><span class="step"><span>Step 4:</span></span><span> Implement a basic login mechanism</span></h2>
 <div class="exo">
-<p><span>On your main page, add a form with a single text input field for a user name.</span></p>
+<ol>
+<li><span>On your main page, add a form with a single text input field for a user name.</span></li>
+</ol>
 <p><span>Submiting this form sends the user name to a POST service, that will register your user name.</span></p>
 <p><span>When the user name is already known, your main page displays this name, and a logout button.</span></p>
+<ol start="2">
+<li><span>Implement a second page, and add HTML links from one page to the other</span></li>
+</ol>
 </div>
 <div pause></div>
 <p><span>Hints:</span></p>
@@ -2281,7 +2286,22 @@ let f () =
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
-<h2 id="send-a-message-to-the-server"><a class="anchor" aria-hidden="true" href="#send-a-message-to-the-server"></a><span class="step"><span>Step 5:</span></span><span> Send a message to the server</span></h2>
+<h2 id="client-server-version-of-your-program"><a class="anchor" aria-hidden="true" href="#client-server-version-of-your-program"></a><span class="step"><span>Step 5:</span></span><span> Client-server version of your program</span></h2>
+<div class="exo">
+<p><span>Modify your program to use shared services</span></p>
+<p><span>Check that when you click on the link, the page is generated on the client</span></p>
+</div>
+<p><span>Hints:</span></p>
+<ol>
+<li><span>For that version, we will keep regular HTML forms with actions implemented</span>
+<span>on the server only (which means that the app will restart with a server-side</span>
+<span>generated page every time you connect or disconnect).</span></li>
+</ol>
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+<h2 id="send-a-message-to-the-server"><a class="anchor" aria-hidden="true" href="#send-a-message-to-the-server"></a><span class="step"><span>Step 6:</span></span><span> Send a message to the server</span></h2>
 <div class="exo">
 <p><span>Add a text input field in the connected version of your page,</span>
 <span>with a submit button, that will send the message to the server.</span></p>
@@ -2329,7 +2349,7 @@ end)
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
-<h2 id="send-a-message-to-another-user"><a class="anchor" aria-hidden="true" href="#send-a-message-to-another-user"></a><span class="step"><span>Step 6:</span></span><span> Send a message to another user</span></h2>
+<h2 id="send-a-message-to-another-user"><a class="anchor" aria-hidden="true" href="#send-a-message-to-another-user"></a><span class="step"><span>Step 7:</span></span><span> Send a message to another user</span></h2>
 <div class="exo">
 <p><span>Make it possible to send a message to another user connected on the same server.</span></p>
 <p><span>Modify your form to have two fields: one for the recipient name, and one for the message.</span>

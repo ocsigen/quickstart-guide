@@ -455,11 +455,13 @@ let f () =
 ## [Step 4:]{.step} Implement a basic login mechanism
 
 {.exo}
->On your main page, add a form with a single text input field for a user name.
+>1. On your main page, add a form with a single text input field for a user name.
 >
 >Submiting this form sends the user name to a POST service, that will register your user name.
 >
 >When the user name is already known, your main page displays this name, and a logout button.
+>
+>2. Implement a second page, and add HTML links from one page to the other
 
 {pause}
 
@@ -669,7 +671,29 @@ the client side version will be used for subsequent calls (or on the mobile app)
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-## [Step 5:]{.step} Send a message to the server
+## [Step 5:]{.step} Client-server version of your program
+
+{.exo}
+>Modify your program to use shared services
+>
+>Check that when you click on the link, the second page is generated on the client
+
+Hints:
+1. For that version, we will keep regular HTML forms with actions implemented
+on the server only (which means that the app will restart with a server-side
+generated page every time you connect or disconnect).
+2. To keep the username on client side, use a regular reference. 
+   The connection service handler must set both the server-side scoped reference and
+   the client-side reference (using a client-value).
+
+
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## [Step 6:]{.step} Send a message to the server
 
 {.exo}
 > Add a text input field in the connected version of your page,
@@ -729,7 +753,7 @@ React.E.map (fun notification -> ...) ~%(Notif.client_ev ())
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
-## [Step 6:]{.step} Send a message to another user
+## [Step 7:]{.step} Send a message to another user
 
 {.exo}
 >Make it possible to send a message to another user connected on the same server.

@@ -464,7 +464,7 @@ let f () =
 {pause}
 
 Hints:
-* See an example of form <a target="_blank" href="">here</a>
+* See an example of form <a target="_blank" href="https://ocsigen.org/tuto/dev/manual/basics-server#h5o-25">here</a>
 * See an example of POST service <a target="_blank" href="">here</a>
 * Use an **action** (service with no output, that will just redisplay the page after perfoming a side-effect) to set a scoped reference with the user name
 * To close the session use function <a target="_blank" href="">`Eliom_state.discard_all`</a>
@@ -633,6 +633,36 @@ which is called when the page is received.
   </slip-body>
 </slip-slip>
 </div>
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## Client-side services
+
+{.server .b}
+```ocaml
+let%server myservice = Eliom_service.create
+                         ~path:(Path ["foo"])
+                         ~meth:(Get any)
+                         ()
+```
+{.client .b .t}
+```ocaml
+let%client myservice = ~%myservice
+```
+{.shared .t}
+```ocaml
+let%shared () =
+  Eliom_registration.Html.register
+    ~service:myservice
+    (fun get_params () -> ...)
+```
+
+If the service is registered on both sides,
+the server side version will be used for the first call (or for indexing by search engines)
+the client side version will be used for subsequent calls (or on the mobile app)
 
   </slip-body>
 </slip-slip>

@@ -2143,7 +2143,7 @@ let f () =
 <div pause></div>
 <p><span>Hints:</span></p>
 <ul>
-<li><span>See an example of form </span><a target="_blank" href=""><span>here</span></a></li>
+<li><span>See an example of form </span><a target="_blank" href="https://ocsigen.org/tuto/dev/manual/basics-server#h5o-25"><span>here</span></a></li>
 <li><span>See an example of POST service </span><a target="_blank" href=""><span>here</span></a></li>
 <li><span>Use an </span><strong><span>action</span></strong><span> (service with no output, that will just redisplay the page after perfoming a side-effect) to set a scoped reference with the user name</span></li>
 <li><span>To close the session use function </span><a target="_blank" href=""><code>Eliom_state.discard_all</code></a></li>
@@ -2257,6 +2257,26 @@ let f () =
   </slip-body>
 </slip-slip>
 </div>
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+<h2 id="client-side-services"><a class="anchor" aria-hidden="true" href="#client-side-services"></a><span>Client-side services</span></h2>
+<pre class="b server"><code class="language-ocaml">let%server myservice = Eliom_service.create
+                         ~path:(Path [&quot;foo&quot;])
+                         ~meth:(Get any)
+                         ()
+</code></pre>
+<pre class="t b client"><code class="language-ocaml">let%client myservice = ~%myservice
+</code></pre>
+<pre class="t shared"><code class="language-ocaml">let%shared () =
+  Eliom_registration.Html.register
+    ~service:myservice
+    (fun get_params () -&gt; ...)
+</code></pre>
+<p><span>If the service is registered on both sides,</span>
+<span>the server side version will be used for the first call (or for indexing by search engines)</span>
+<span>the client side version will be used for subsequent calls (or on the mobile app)</span></p>
   </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">

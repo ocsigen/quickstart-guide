@@ -1812,6 +1812,7 @@ code { font-size: smaller; }
 .hidden { position:absolute; visibility: hidden; }
 .center { text-align: center; }
 .smaller { font-size: smaller; }
+.focused { outline: 2000px solid #000000aa; }
 .encadré { 
   position: relative; 
   background-color: #ffccaa;
@@ -2066,17 +2067,37 @@ Error: This expression has type [&gt; p ] elt = 'a elt
 <p><span>Compile and run:</span></p>
 <pre><code class="language-bash">$ dune exec mysite
 </code></pre>
-<div focus-at-unpause=servunit pause></div>
-<div static-at-unpause="servparam" unstatic-at-unpause="servunit" pause></div>
-<div focus-at-unpause=regunit pause></div>
-<div focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regunit" pause></div>
-<div focus-at-unpause=regparam2 static-at-unpause="regparam2" unstatic-at-unpause="regparam" pause></div>
-<div focus-at-unpause=regparam3 static-at-unpause="regparam3" unstatic-at-unpause="regparam2" pause></div>
-<div focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam3" pause></div>
-<div focus-at-unpause=regparam4 static-at-unpause="regparam4" unstatic-at-unpause="regparam" pause></div>
-<div focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam4" pause></div>
-<div focus-at-unpause=regparam5 static-at-unpause="regparam5" unstatic-at-unpause="regparam" pause></div>
-<div unfocus-at-unpause="regparam5" down-at-unpause="tyxmlend" pause></div>
+<script type=slip-script exec-at-unpause focus-at-unpause=servunit pause>
+document.querySelector("#servunit").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause static-at-unpause="servparam" unstatic-at-unpause="servunit" pause>
+document.querySelector("#servunit").classList.remove("focused")
+document.querySelector("#servparam").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regunit pause>
+document.querySelector("#servparam").classList.remove("focused")
+document.querySelector("#regunit").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regunit" pause>
+document.querySelector("#regunit").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam2 static-at-unpause="regparam2" unstatic-at-unpause="regparam" pause>
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam2").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam3 static-at-unpause="regparam3" unstatic-at-unpause="regparam2" pause>
+document.querySelector("#regparam2").classList.remove("focused")
+document.querySelector("#regparam3").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam3" pause>
+document.querySelector("#regparam3").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam4 static-at-unpause="regparam4" unstatic-at-unpause="regparam" pause>
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam4").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam4" pause>
+document.querySelector("#regparam4").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam5 static-at-unpause="regparam5" unstatic-at-unpause="regparam" pause>
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam5").classList.add("focused")</script>
+<script type=slip-script exec-at-unpause unfocus-at-unpause="regparam5" down-at-unpause="tyxmlend" pause>
+document.querySelector("#regparam5").classList.remove("focused")</script>
 <div id="servicesdown"></div>
   </slip-body>
 </slip-slip>
@@ -2236,6 +2257,7 @@ let f () =
 </code></pre>
 <pre class="t client"><code class="language-ocaml">let%client () = ... let%lwt v = f 22 in ...
 </code></pre>
+<p><em><span>Warning: type annotations are mandatory</span></em></p>
 <div id="clientdown2"></div>
 <div down-at-unpause=clientdown3 pause></div>
 <h3 id="client-values-inserting-client-side-code-in-your-pages"><a class="anchor" aria-hidden="true" href="#client-values-inserting-client-side-code-in-your-pages"></a><span>Client-values: inserting client-side code in your pages</span></h3>
@@ -2245,13 +2267,14 @@ let f () =
   let b = button [txt &quot;click&quot;] in
   let _ =
 </code></pre>
-<pre class="bb tt b t client"><code class="language-ocaml">    [%client Lwt_js_events.clicks ~%b 
-               (fun ev -&gt; Dom_html.window##alert(Js.string ~%s))
+<pre class="bb tt b t client"><code class="language-ocaml">    [%client (Lwt_js_events.clicks ~%b 
+               (fun ev -&gt; Dom_html.window##alert(Js.string ~%s) : unit))
     ]
 </code></pre>
 <pre class="tt t shared"><code class="language-ocaml">  in
   d
 </code></pre>
+<p><em><span>Warning: type annotations are mandatory</span></em></p>
 <p><span>The code is actually included in the client-side program as a function,</span>
 <span>which is called when the page is received.</span></p>
 <div id="clientdown3"></div>
@@ -2289,13 +2312,16 @@ let f () =
 <h2 id="client-server-version-of-your-program"><a class="anchor" aria-hidden="true" href="#client-server-version-of-your-program"></a><span class="step"><span>Step 5:</span></span><span> Client-server version of your program</span></h2>
 <div class="exo">
 <p><span>Modify your program to use shared services</span></p>
-<p><span>Check that when you click on the link, the page is generated on the client</span></p>
+<p><span>Check that when you click on the link, the second page is generated on the client</span></p>
 </div>
 <p><span>Hints:</span></p>
 <ol>
 <li><span>For that version, we will keep regular HTML forms with actions implemented</span>
 <span>on the server only (which means that the app will restart with a server-side</span>
 <span>generated page every time you connect or disconnect).</span></li>
+<li><span>To keep the username on client side, use a regular reference.</span>
+<span>The connection service handler must set both the server-side scoped reference and</span>
+<span>the client-side reference (using a client-value).</span></li>
 </ol>
   </slip-body>
 </slip-slip>

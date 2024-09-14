@@ -30,6 +30,7 @@ code { font-size: smaller; }
 .hidden { position:absolute; visibility: hidden; }
 .center { text-align: center; }
 .smaller { font-size: smaller; }
+.focused { outline: 2000px solid #000000aa; }
 .encadré { 
   position: relative; 
   background-color: #ffccaa;
@@ -380,27 +381,69 @@ Compile and run:
 ```bash
 $ dune exec mysite
 ```
-{pause focus-at-unpause=servunit}
+{pause focus-at-unpause=servunit exec-at-unpause}
+```slip-script
+document.querySelector("#servunit").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="servunit" static-at-unpause="servparam"}
+{pause unstatic-at-unpause="servunit" static-at-unpause="servparam" exec-at-unpause}
+```slip-script
+document.querySelector("#servunit").classList.remove("focused")
+document.querySelector("#servparam").classList.add("focused")
+```
 
-{pause focus-at-unpause=regunit}
+{pause focus-at-unpause=regunit exec-at-unpause}
+```slip-script
+document.querySelector("#servparam").classList.remove("focused")
+document.querySelector("#regunit").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam}
+{pause unstatic-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+```slip-script
+document.querySelector("#regunit").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2}
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2 exec-at-unpause}
+```slip-script
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam2").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3}
+{pause unstatic-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3 exec-at-unpause}
+```slip-script
+document.querySelector("#regparam2").classList.remove("focused")
+document.querySelector("#regparam3").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam}
+{pause unstatic-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+```slip-script
+document.querySelector("#regparam3").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4}
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4 exec-at-unpause}
+```slip-script
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam4").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam}
+{pause unstatic-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+```slip-script
+document.querySelector("#regparam4").classList.remove("focused")
+document.querySelector("#regparam").classList.add("focused")
+```
 
-{pause unstatic-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5}
+{pause unstatic-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5 exec-at-unpause}
+```slip-script
+document.querySelector("#regparam").classList.remove("focused")
+document.querySelector("#regparam5").classList.add("focused")
+```
 
-{pause down-at-unpause="tyxmlend" unfocus-at-unpause="regparam5"}
+{pause down-at-unpause="tyxmlend" unfocus-at-unpause="regparam5" exec-at-unpause}
+```slip-script
+document.querySelector("#regparam5").classList.remove("focused")
+```
 
 {#servicesdown}
 
@@ -594,6 +637,8 @@ let%rpc f (i : int) : unit Lwt.t = Lwt.return (i + 10)
 ```ocaml
 let%client () = ... let%lwt v = f 22 in ...
 ```
+*Warning: type annotations are mandatory*
+
 {#clientdown2}
 
 {pause down-at-unpause=clientdown3}
@@ -613,8 +658,8 @@ let%shared mybutton s =
 ```
 {.client .t .b .tt .bb}
 ```ocaml
-    [%client Lwt_js_events.clicks ~%b 
-               (fun ev -> Dom_html.window##alert(Js.string ~%s))
+    [%client (Lwt_js_events.clicks ~%b 
+               (fun ev -> Dom_html.window##alert(Js.string ~%s) : unit))
     ]
 ```
 {.shared .t .tt}
@@ -622,6 +667,7 @@ let%shared mybutton s =
   in
   d
 ```
+*Warning: type annotations are mandatory*
 
 The code is actually included in the client-side program as a function,
 which is called when the page is received.
@@ -702,7 +748,7 @@ generated page every time you connect or disconnect).
 > The server will just display the message in its console
 
 Hints:
-* This time, we won't submit the form to a new service, but use a RPC
+* This time, we won't submit the form to a new service, but use a RPC. Use regular Tyxml `input` fields instead of the `Form` module.
 * Take example either on the [onclick]{} example above or 
   use [Lwt_js_events]{}.
 

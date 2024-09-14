@@ -96,6 +96,7 @@ pre.tt code { padding-top: 0; }
 >>
 >> FUN-OCaml - Berlin<br/> Sep 16-17 2024
 
+{style="height: 400px; width:100%;"}
 
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
@@ -682,12 +683,16 @@ If you want to send a message to all users listening on a given resource, call f
 On client side, `~%(Notif.client_ev ())` is a React event of type 
 `(key, notif) React.E.t`. Use it to receive the messages.
 
+{pause down-at-unpause=notifdown}
+
 Example:
 
 {.client}
 ```ocaml
 React.E.map (fun notification -> ...) ~%(Notif.client_ev ()) 
 ```
+
+{#notifdown}
 
   </slip-body>
 </slip-slip>
@@ -696,7 +701,7 @@ React.E.map (fun notification -> ...) ~%(Notif.client_ev ())
 
 ## [Step 6:]{.step} Send a message to another user
 
-{.Exo}
+{.exo}
 >Make it possible to send a message to another user connected on the same server.
 >
 >Modify your form to have two fields: one for the recipient name, and one for the message.
@@ -772,6 +777,22 @@ Then read the README file
 >Use Ocsigen Start to test
 
 {style="height: 1900px;"}
+
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 33.33%; overflow: hidden;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+## How to learn more?
+
+Please read the
+<a href="https://ocsigen.org/tuto/basics" target="_blank">main tutorial</a> first!
+
+and look at each example in Ocsigen Start's template.
+
+{style="text-align: right;"}
+<img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="800px"/><br/>
+[Slides powered by [Slipshow](https://github.com/panglesd/slipshow)]{style="color: #aaa"}.
 
   </slip-body>
 </slip-slip>

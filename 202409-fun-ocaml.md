@@ -1,8 +1,6 @@
 <style>
 slip-slipshow>slip-slip>.slip-scale-container>.slip-container>slip-body {
     margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
 }
 slip-body {
   font-family: "Ubuntu";
@@ -10,12 +8,16 @@ slip-body {
   margin: 0;
   color: #555;
 }
+.slip-group {
+  display: flex;
+  flex-wrap: no-wrap;
+}
 a { color: #0c4481; }
 code { font-size: smaller; }
 .columns {
     display: flex;
-    justify-content: center;
-    width: 100%;
+    justify-content: space-evenly;
+    width: 1300px;
 }
 .col {
     align-self: center;
@@ -29,8 +31,10 @@ code { font-size: smaller; }
 .vspace { height: 1em; }
 .hidden { position:absolute; visibility: hidden; }
 .center { text-align: center; }
+.right { text-align: right; }
 .smaller { font-size: smaller; }
-.focused { outline: 2000px solid #000000aa; }
+.focused { outline: 20000px solid #000000aa; }
+.comment { color: #888; font-style: italic; }
 .encadré { 
   position: relative; 
   background-color: #ffccaa;
@@ -61,6 +65,9 @@ code { border-radius: 12px; }
 .server code { background-color: #ddeeff; }
 .client code { background-color: #ffffdd; }
 .shared code { background-color: #eeffee; }
+.partimg { position: relative; left: -200px; top: -100px; }
+.parttitle { position: relative;text-align: right; top: -150px; }
+.partsubtitle { position: relative; text-align: right; top: -180px; }
 pre.b { margin-bottom: 0; }
 pre.b code { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 pre.bb code { padding-bottom: 0; }
@@ -97,8 +104,16 @@ pre.tt code { padding-top: 0; }
 >>
 >> FUN-OCaml - Berlin<br/> Sep 16-17 2024
 
-{style="height: 400px; width:100%;"}
+{.vspace}
 
+{.vspace}
+
+{.comment .right}
+Use arrow keys to navigate
+
+ </slip-body>
+</slip-slip>
+<div class="slip-group">
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
@@ -107,8 +122,20 @@ pre.tt code { padding-top: 0; }
 ```bash
 $ opam install ocsigen-start ocsipersist-sqlite-config
 ```
+{.vspace}
 
-  </slip-body>
+{.vspace}
+
+{.vspace}
+
+{.vspace}
+
+{.comment}
+You can find these slides on [ocsigen.org](https://ocsigen.org/talks/tutochat.html) \
+and the source code of the sides with the solution of
+exercices [on Github](https://github.com/ocsigen/quickstart-guide).
+
+ </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
@@ -186,6 +213,24 @@ The sports social network
   </slip-body>
 </slip-slip>
 
+</div>
+<div class="slip-group">
+
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+{.partimg}
+![Ocsigen](ocsigen-bubbles-large.png)
+
+{.parttitle}
+# First part: Server-side programming
+
+{.partsubtitle}
+## Write your website in OCaml
+
+  </slip-body>
+</slip-slip>
+
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
@@ -215,7 +260,7 @@ Where `config` is something like:
 </ocsigen>
 ```
 
-{pause #lib up-at-unpause=lib}
+{pause #lib down-at-unpause=downserver}
 
 {.vspace}
 
@@ -245,17 +290,19 @@ dune build
 Find more complex configuration examples in the
 [manual](https://ocsigen.org/ocsigenserver/latest/manual/staticlink)
 
+{#downserver}
+
   </slip-body>
 </slip-slip>
 
-<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+<slip-slip style="width: 33.33%; overflow: hidden;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
 ## [Step 3:]{.step} Generating pages with Eliom
 
 Create a new project:
 ```bash
-$ dune init proj --kind=lib mysite
+$ dune init project --kind=executable mysite
 $ cd mysite
 ```
 {.pause}
@@ -375,12 +422,15 @@ let () =
 ```
 {pause #sdkjf down-at-unpause=servicesdown}
 
-Add packages `ocsipersist-sqlite` and `eliom.server` to file `bin/dune`, in the "libraries" section.
+Add packages `ocsipersist-sqlite`, `ocsigenserver.ext.staticmod` and `eliom.server` to file `bin/dune`, in the "libraries" section and create the directories used in the configuration just above.
 
 Compile and run:
 ```bash
 $ dune exec mysite
 ```
+
+Go to [http://localhost:8080/foo](http://localhost:8080/foo) to test your program.
+
 {pause focus-at-unpause=servunit exec-at-unpause}
 ```slip-script
 document.querySelector("#servunit").classList.add("focused")
@@ -518,6 +568,9 @@ Test your app with several browsers to check that you can have several users sim
 
 {pause down-at-unpause=endstep4}
 
+{.comment}
+See the solution <a target="_blank" href="https://github.com/ocsigen/quickstart-guide/blob/Step4/myapp/myapp.eliom">here</a>.
+
 {.exo}
 Advanced version: instead of using a reference with scope session,
 create a session group whose name is the user name.
@@ -527,7 +580,7 @@ Check that you can share session data across multiple browsers.
 
   </slip-body>
 </slip-slip>
-<slip-slip style="width: 33.33%; overflow: hidden;" auto-enter scale="0.3333" delay="1">
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
 <img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="1200px" style="position: absolute; top: -650px; right: -300px;"/>
@@ -557,6 +610,22 @@ The form data will be saved in the closure!
 
   </slip-body>
 </slip-slip>
+</div>
+<div class="slip-group">
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+{.partimg}
+![Ocsigen](ocsigen-bubbles-large.png)
+
+{.parttitle}
+# Second part: Client-server programming
+
+{.partsubtitle}
+## Write a Web and mobile app in OCaml
+
+  </slip-body>
+</slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
@@ -576,7 +645,7 @@ Insert the following line in `myapp.eliom`:
 
 {.client}
 ```ocaml
-let%client () = print_endline "Hello";
+let%client () = print_endline "Hello"
 ```
 See the result in your browser's console.
 
@@ -595,7 +664,7 @@ See the result in your browser's console.
 >```
 >{.shared}
 >```ocaml
->let%client () = ...
+>let%shared () = ...
 >```
 
   </slip-body>
@@ -614,11 +683,11 @@ See the result in your browser's console.
 
 {.server .b}
 ```ocaml
-let%server message = "Hello";
+let%server message = "Hello"
 ```
 {.client .t}
 ```ocaml
-let%client () = print_endline ~%message;
+let%client () = print_endline ~%message
 ```
 
 The values are send together with the page (Eliom never calls the server if you don't ask to).
@@ -641,7 +710,7 @@ let%client () = ... let%lwt v = f 22 in ...
 
 {#clientdown2}
 
-{pause down-at-unpause=clientdown3}
+{pause up-at-unpause=clientdown2}
 
 ### Client-values: inserting client-side code in your pages 
 
@@ -658,7 +727,7 @@ let%shared mybutton s =
 ```
 {.client .t .b .tt .bb}
 ```ocaml
-    [%client (Lwt_js_events.clicks ~%b 
+    [%client (Lwt_js_events.clicks (To_dom.of_element ~%b)
                (fun ev -> Dom_html.window##alert(Js.string ~%s) : unit))
     ]
 ```
@@ -669,15 +738,24 @@ let%shared mybutton s =
 ```
 *Warning: type annotations are mandatory*
 
+{pause down-at-unpause=clientdown3}
+
 The code is actually included in the client-side program as a function,
 which is called when the page is received.
+
+On this example, you can see a few new concepts:
+* `To_dom.of_element` (or `of_div`, etc.) is used to convert a Tyxml node
+  to a DOM node
+* `Js.string` is used to convert an OCaml string to a Javascript string
+* `##` is a syntax used to call Javascript methods in typesafe way. `##.` is used to access Javascript object fields.
+* `Lwt_js_events` defines a very simple and powerful and simple way to bind interface events (here `clicks` means: *"for all clicks, call the function"*)
 
 {#clientdown3}
 
 <div style="display: flex; justify-content: space-around;">
 <slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
   <slip-body style="text-align: center;">
-<img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="600px"/>
+<img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="1200px"/>
   </slip-body>
 </slip-slip>
 </div>
@@ -688,6 +766,11 @@ which is called when the page is received.
   <slip-body>
 
 ## Client-side services
+
+**Generating pages on the client or the server depending on cases**
+
+This is a typical example of service definition and registration
+for a client-server Web and mobile app:
 
 {.server .b}
 ```ocaml
@@ -717,6 +800,8 @@ the client side version will be used for subsequent calls (or on the mobile app)
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 
+<img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="1200px" style="position: absolute; top: -720px; right: -500px;"/>
+
 ## [Step 5:]{.step} Client-server version of your program
 
 {.exo}
@@ -735,6 +820,9 @@ generated page every time you connect or disconnect).
    that is, when a page is generated on the server (subsequent pages are generated
    on the client, without stopping the client-side process).
 
+
+{.comment}
+See the solution <a target="_blank" href="https://github.com/ocsigen/quickstart-guide/blob/Step5/myapp/myapp.eliom">here</a>.
 
 
   </slip-body>
@@ -817,8 +905,24 @@ React.E.map (fun notification -> ...) ~%(Notif.client_ev ())
 Make sure that you receive only the message sent to you.
 
 Hints:
-1. Use module [](`Manip`) to append the new element to the page
+1. Use module [`Manip`](https://ocsigen.org/eliom/api/11.0/Eliom_content.Html.Manip) to append the new element to the page
 2. To_dom.of_element
+
+{.comment}
+See the solution <a target="_blank" href="https://github.com/ocsigen/quickstart-guide/blob/Step7/myapp/myapp.eliom">here</a>.
+
+  </slip-body>
+</slip-slip>
+</div>
+<div class="slip-group">
+<slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
+  <slip-body>
+
+{.partimg}
+![Ocsigen](ocsigen-bubbles-large.png)
+
+{.parttitle}
+# Going further
 
   </slip-body>
 </slip-slip>
@@ -901,3 +1005,4 @@ and look at each example in Ocsigen Start's template.
 
   </slip-body>
 </slip-slip>
+</div>

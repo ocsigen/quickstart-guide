@@ -103,6 +103,8 @@ pre.tt code { padding-top: 0; }
 #regparam5 .encadré::after { content: '⬇'; position: absolute; bottom: -80px; left: 150px; font-weight: bold; font-size: 100px; color: #ee5522;}
 </style>
 
+<slip-slip style="width: 100%;" auto-enter scale="1" delay="1">
+  <slip-body style="margin-top: 0;">
 
 {.columns #title}
 >{.col style="flex: 0 0;"}
@@ -148,7 +150,7 @@ $ opam install ocsigen-start ocsipersist-sqlite-config
 
 {.comment}
 You can find these slides on [ocsigen.org](https://ocsigen.org/talks/tutochat.html) \
-and the source code of the sides with the solution of
+and the source code of the slides with the solution of
 exercices [on Github](https://github.com/ocsigen/quickstart-guide).
 
 {.comment}

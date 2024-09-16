@@ -1787,6 +1787,7 @@ relevance:0},{begin:/->/}]})})();hljs.registerLanguage("ocaml",e)})();</script>
 slip-slipshow>slip-slip>.slip-scale-container>.slip-container>slip-body {
     margin: 0 auto;
 }
+slip-slip { width: 33.33%;}
 slip-body {
   font-family: "Ubuntu", sans-serif;
   line-height: 1.4;
@@ -1861,7 +1862,7 @@ pre.t code { border-top-left-radius: 0; border-top-right-radius: 0; }
 pre.tt code { padding-top: 0; }
 .hljs-deletion, .hljs-number, .hljs-quote, .hljs-selector-class, .hljs-selector-id, .hljs-template-tag, .hljs-type { color: #2788f1; }
 .hljs-string { color: #e88; }
-#scopes:before {
+#scopes::before {
   content: '⬉';
   position: absolute;
   top: -90px;
@@ -1870,6 +1871,18 @@ pre.tt code { padding-top: 0; }
   font-size: 100px;
   color: #ee5522;
 }
+#servparam .encadré { position: fixed; bottom: 1550px; left: 400px; width: 600px;}
+#servparam .encadré::after { content: '⬇'; position: absolute; bottom: -120px; left: 300px; font-weight: bold; font-size: 100px; color: #ee5522;}
+#regparam .encadré { position: fixed; bottom: 1250px; left: 200px; width: 600px;}
+#regparam .encadré::after { content: '⬇'; position: absolute; bottom: -120px; left: 100px; font-weight: bold; font-size: 100px; color: #ee5522;}
+#regparam2 .encadré { position: fixed; bottom: 1200px; left: 200px; width: 600px;}
+#regparam2 .encadré::after { content: '⬇'; position: absolute; bottom: -120px; left: 230px; font-weight: bold; font-size: 100px; color: #ee5522;}
+#regparam3 .encadré { position: fixed; bottom: 1250px; left: 200px; width: 600px;}
+#regparam3 .encadré::after { content: '⬇'; position: absolute; bottom: -120px; left: 230px; font-weight: bold; font-size: 100px; color: #ee5522;}
+#regparam4 .encadré { position: fixed; bottom: 1250px; left: 200px; width: 600px;}
+#regparam4 .encadré::after { content: '⬇'; position: absolute; bottom: -140px; left: 300px; font-weight: bold; font-size: 100px; color: #ee5522;}
+#regparam5 .encadré { position: fixed; bottom: 1680px; left: 650px; width: 600px;}
+#regparam5 .encadré::after { content: '⬇'; position: absolute; bottom: -80px; left: 150px; font-weight: bold; font-size: 100px; color: #ee5522;}
 </style>
 <div id="title" class="columns">
 <div class="col" style="flex: 0 0;">
@@ -1902,6 +1915,8 @@ pre.tt code { padding-top: 0; }
 <p class="comment"><span>You can find these slides on </span><a href="https://ocsigen.org/talks/tutochat.html"><span>ocsigen.org</span></a><span> </span><br>
 <span>and the source code of the sides with the solution of</span>
 <span>exercices </span><a href="https://github.com/ocsigen/quickstart-guide"><span>on Github</span></a><span>.</span></p>
+<p class="comment"><span>Refer to the main </span><a href="https://ocsigen.org/tuto/latest/manual/basics" target="_blank"><span>one page user manual</span></a>
+<span>to get more explanations.</span></p>
  </slip-body>
 </slip-slip>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
@@ -1911,7 +1926,7 @@ pre.tt code { padding-top: 0; }
 <p><img alt="Ocsigen" src="be-ocsigenlogo.svg" width="200px"/><br/>
 <img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="800px"/></p>
 </div>
-<p style="position: absolute; top: 100px; left: 960px;"><span>Ocsigen Server</span></p>
+<p style="position: absolute; top: 100px; left: 940px;"><span>Ocsigen Server</span></p>
 <p id="aaa" style="position: absolute; top: 320px; left: 1000px;"><span>Eliom</span></p>
 <p style="position: absolute; top: 520px; left: 940px;"><span>Js_of_ocaml</span></p>
 <p style="position: absolute; top: 700px; left: 800px;"><span>Tyxml</span></p>
@@ -2016,12 +2031,18 @@ $ cd mysite
     ~meth:(Eliom_service.Get Eliom_parameter.unit)
     ()
 </code></pre>
-<pre id="servparam" class="server hidden"><code class="language-ocaml">let myservice =
+<div id="servparam" class="server hidden">
+<pre><code class="language-ocaml">let myservice =
   Eliom_service.create
     ~path:(Eliom_service.Path [&quot;foo&quot;])
     ~meth:(Eliom_service.Get (Eliom_parameter.(string &quot;myparam&quot; ** int &quot;i&quot;)))
     ()
 </code></pre>
+<div id="servparamexpl" class="encadré">
+<p><span>Use module </span><code>Eliom_parameter</code><span> to specify which GET or POST parameters you want your page to take.</span></p>
+<p><span>Eliom checks types automatically and converts them to OCaml values</span></p>
+</div>
+</div>
 <p><span>Register a handler:</span></p>
 <pre id="regunit" class="server"><code class="language-ocaml">let () =
   Eliom_registration.Html.register ~service:myservice
@@ -2030,33 +2051,59 @@ $ cd mysite
          Eliom_content.Html.F.(html (head (title (txt &quot;The title&quot;)) [])
                                     (body [h1 [txt &quot;Hello&quot;]])))
 </code></pre>
-<pre id="regparam" class="server hidden"><code class="language-ocaml">let () =
+<div id="regparam" class="server hidden">
+<pre><code class="language-ocaml">let () =
   Eliom_registration.Html.register ~service:myservice
     (fun (myparam, _i) () -&gt;
       Lwt.return
          Eliom_content.Html.F.(html (head (title (txt &quot;The title&quot;)) [])
                                     (body [h1 [txt myparam]])))
 </code></pre>
-<pre id="regparam2" class="server hidden"><code class="language-ocaml">let () =
+<div id="regparamexpl" class="encadré">
+<p><span>The service handler now takes as first argument something of type </span><code>string * int</code></p>
+</div>
+</div>
+<div id="regparam2" class="server hidden">
+<pre><code class="language-ocaml">let () =
   Eliom_registration.File.register ~service:myservice
     (fun (_myparam, _i) () -&gt;
       Lwt.return &quot;filename&quot;)
 </code></pre>
-<pre id="regparam3" class="server hidden"><code class="language-ocaml">let () =
+<div class="encadré">
+<p><span>Services can return other types of content.</span></p>
+<p><span>For example, we can return a file:</span></p>
+</div>
+</div>
+<div id="regparam3" class="server hidden">
+<pre><code class="language-ocaml">let () =
   let a = ref 0 in
   Eliom_registration.Action.register ~service:myservice
     (fun (myparam, _i) () -&gt;
       a := a + 1;
       Lwt.return ())
 </code></pre>
-<pre id="regparam4" class="server hidden"><code class="language-ocaml">let () =
+<div class="encadré">
+<p><span>or an </span><em><span>action</span></em><span>.</span></p>
+<p><span>Actions are services performing a side-effect.</span>
+<span>Handlers do not return any value.</span>
+<span>By default, the current page is regenerated.</span></p>
+</div>
+</div>
+<div id="regparam4" class="server hidden">
+<pre><code class="language-ocaml">let () =
   Eliom_registration.Html.register ~service:myservice
     (fun (myparam, _i) () -&gt;
       Lwt.return ([%html{|&lt;html&gt;&lt;head&gt;&lt;title&gt;&lt;/title&gt;&lt;/head&gt;
-                            &lt;body&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;/body&gt;
+                           &lt;body&gt;&lt;h1&gt;Hello&lt;/h1&gt;&lt;/body&gt;
                           &lt;/html&gt;|})
 </code></pre>
-<pre id="regparam5" class="server hidden"><code class="language-ocaml">let () =
+<div class="encadré">
+<p><span>A PPX extension provided by Tyxml makes it possible to use</span>
+<span>regular HTML syntax if you prefer</span></p>
+</div>
+</div>
+<div id="regparam5" class="server hidden">
+<pre><code class="language-ocaml">let () =
   Eliom_registration.Html.register ~service:myservice
     (fun (myparam, _i) () -&gt;
       Lwt.return
@@ -2066,7 +2113,7 @@ $ cd mysite
 Error: This expression has type [&gt; p ] elt = 'a elt
        but an expression was expected of type [&lt; p_content ] elt = 'b elt
 
-       Type 'a = [&gt; `P ] is not compatible with type
+      Type 'a = [&gt; `P ] is not compatible with type
             'b = [&lt; `A of phrasing_without_interactive
                   | `Abbr
                   | `Audio of phrasing_without_media
@@ -2080,6 +2127,11 @@ Error: This expression has type [&gt; p ] elt = 'a elt
 
      The second variant type does not allow tag(s) `P
 </code></pre>
+<div class="encadré">
+<p><span>Tyxml type-checks your HTML!</span>
+<span>This makes sure at compile time your program will never generate incorrect pages!</span></p>
+</div>
+</div>
 <div id="tyxmlend" down-at-unpause=sdkjf pause></div>
 <p><span>Start the server with static files and Eliom:</span></p>
 <pre class="server"><code class="language-ocaml">let () = 
@@ -2105,7 +2157,7 @@ document.querySelector("#servunit").classList.add("focused")</script>
 <script type=slip-script exec-at-unpause static-at-unpause="servparam" unstatic-at-unpause="servunit" pause>
 document.querySelector("#servunit").classList.remove("focused")
 document.querySelector("#servparam").classList.add("focused")</script>
-<script type=slip-script exec-at-unpause focus-at-unpause=regunit pause>
+<script type=slip-script exec-at-unpause focus-at-unpause=regunit unstatic-at-unpause="servparamexpl" pause>
 document.querySelector("#servparam").classList.remove("focused")
 document.querySelector("#regunit").classList.add("focused")</script>
 <script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regunit" pause>
@@ -2117,7 +2169,7 @@ document.querySelector("#regparam2").classList.add("focused")</script>
 <script type=slip-script exec-at-unpause focus-at-unpause=regparam3 static-at-unpause="regparam3" unstatic-at-unpause="regparam2" pause>
 document.querySelector("#regparam2").classList.remove("focused")
 document.querySelector("#regparam3").classList.add("focused")</script>
-<script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam3" pause>
+<script type=slip-script exec-at-unpause focus-at-unpause=regparam static-at-unpause="regparam" unstatic-at-unpause="regparam3 regparamexpl" pause>
 document.querySelector("#regparam3").classList.remove("focused")
 document.querySelector("#regparam").classList.add("focused")</script>
 <script type=slip-script exec-at-unpause focus-at-unpause=regparam4 static-at-unpause="regparam4" unstatic-at-unpause="regparam" pause>
@@ -2137,6 +2189,7 @@ document.querySelector("#regparam5").classList.remove("focused")</script>
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 <h2 id="sessions-scoped-references"><a class="anchor" aria-hidden="true" href="#sessions-scoped-references"></a><span>Sessions: scoped references</span></h2>
+<p><span>Server-side session data is stored in </span><em><span>Eliom references</span></em><span>:</span></p>
 <pre id="eref1" class="server"><code class="language-ocaml">let r = 
   Eliom_reference.eref
      ~scope:Eliom_common.default_session_scope 0
@@ -2158,6 +2211,7 @@ let f () =
 <div static-at-unpause="eref2" unstatic-at-unpause="eref1" pause></div>
 <div pause></div>
 <div id="scopes" class="encadré" style="width:550px; left:650px; top:-140px; ">
+<p><span>Eliom references have a scope!</span></p>
 <div role="region"><table>
 <tr>
 <td><strong><span>Request</span></strong></td>
@@ -2202,10 +2256,9 @@ let f () =
 <div pause></div>
 <p><span>Hints:</span></p>
 <ul>
-<li><span>See an example of form </span><a target="_blank" href="https://ocsigen.org/tuto/dev/manual/basics-server#h5o-25"><span>here</span></a></li>
-<li><span>See an example of POST service </span><a target="_blank" href=""><span>here</span></a></li>
+<li><span>See an example of form and POST service </span><a target="_blank" href="https://ocsigen.org/tuto/dev/manual/basics-server#h5o-25"><span>here</span></a></li>
 <li><span>Use an </span><strong><span>action</span></strong><span> (service with no output, that will just redisplay the page after perfoming a side-effect) to set a scoped reference with the user name</span></li>
-<li><span>To close the session use function </span><a target="_blank" href=""><code>Eliom_state.discard_all</code></a></li>
+<li><span>To close the session use function </span><a target="_blank" href="https://ocsigen.org/eliom/latest/api/server/Eliom_state#VALdiscard_all"><code>Eliom_state.discard_all</code></a></li>
 </ul>
 <p><span>Test your app with several browsers to check that you can have several users simultaneously.</span></p>
 <div down-at-unpause=endstep4 pause></div>
@@ -2323,10 +2376,9 @@ let f () =
 <span>which is called when the page is received.</span></p>
 <p><span>On this example, you can see a few new concepts:</span></p>
 <ul>
-<li><code>To_dom.of_element</code><span> (or </span><code>of_div</code><span>, etc.) is used to convert a Tyxml node</span>
-<span>to a DOM node</span></li>
+<li><code>To_dom.of_element</code><span> (or </span><code>of_div</code><span>, etc.) is used to get the DOM node corresponding to some Tyxml </span><code>Eliom_content.Html.D</code><span> node</span></li>
 <li><code>Js.string</code><span> is used to convert an OCaml string to a Javascript string</span></li>
-<li><code>##</code><span> is a syntax used to call Javascript methods in typesafe way. </span><code>##.</code><span> is used to access Javascript object fields.</span></li>
+<li><code>##</code><span> is a syntax used to call Javascript methods in typesafe way. Similarly, </span><code>##.</code><span> is used to access Javascript object fields.</span></li>
 <li><code>Lwt_js_events</code><span> defines a very simple and powerful and simple way to bind interface events (here </span><code>clicks</code><span> means: </span><em><span>&quot;for all clicks, call the function&quot;</span></em><span>)</span></li>
 </ul>
 <div id="clientdown3"></div>
@@ -2447,8 +2499,10 @@ end)
 <p><span>Make sure that you receive only the message sent to you.</span></p>
 <p><span>Hints:</span></p>
 <ol>
-<li><span>Use module </span><a href="https://ocsigen.org/eliom/api/11.0/Eliom_content.Html.Manip"><code>Manip</code></a><span> to append the new element to the page</span></li>
-<li><span>To_dom.of_element</span></li>
+<li><span>Instantiate functor </span><code>Eliom_notif.Make_Simple</code><span> on server side, with </span><code>get_identity</code><span> being the function to get current user from your scoped reference. Resources are chat channels. Here a channel is identified (</span><code>key</code><span>) by the recipient name (one channel for each user, where everyone can write).</span></li>
+<li><span>Your RPC to send a message will now notify the recipient (server-side)</span></li>
+<li><span>Every time the client process starts (i.e. every time a page is generated on the server), you need to start listening on your own channel (on server-side), and ask the client to react to event </span><code>client_ev</code></li>
+<li><span>Use module </span><a href="https://ocsigen.org/eliom/latest/api/client/Eliom_content.Html.Manip"><code>Manip</code></a><span> to append the new element to the page</span></li>
 </ol>
 <p class="comment"><span>See the solution </span><a target="_blank" href="https://github.com/ocsigen/quickstart-guide/blob/Step7/myapp/myapp.eliom"><span>here</span></a><span>.</span></p>
   </slip-body>
@@ -2464,6 +2518,7 @@ end)
 <slip-slip style="width: 33.33%;" auto-enter scale="0.3333" delay="1">
   <slip-body>
 <h2 id="ocsigen-toolkit"><a class="anchor" aria-hidden="true" href="#ocsigen-toolkit"></a><span>Ocsigen Toolkit</span></h2>
+<p><em><span>Client-server widgets</span></em></p>
 <div style="height: 700px;"></div>
 <img alt="Ocsigen" src="toolkit-cal.png" width="400px" style="position: absolute; top: 200px; right: 100px;"/>
 <img alt="Ocsigen" src="toolkit-tabs.png" width="400px" style="position: absolute; top: 550px; left: 100px;"/>
@@ -2477,7 +2532,9 @@ end)
 <p><strong><span>Library</span></strong><br/>
 <span>user management, passwords, etc.</span></p>
 <p><strong><span>Application template</span></strong></p>
-<p><strong><span>Code samples</span></strong></p>
+<p><strong><span>Code samples</span></strong><br/>
+<span>Ocsigen Start is the easiest way</span><br>
+<span>to learn Eliom!</span></p>
 <div style="height: 200px;"></div>
 <pre><code class="language-bash">eliom-distillery --template os.pgocaml -name myapp
 </code></pre>
@@ -2508,7 +2565,7 @@ end)
   <slip-body>
 <h2 id="how-to-learn-more"><a class="anchor" aria-hidden="true" href="#how-to-learn-more"></a><span>How to learn more?</span></h2>
 <p><span>Please read the</span>
-<a href="https://ocsigen.org/tuto/basics" target="_blank"><span>main tutorial</span></a><span> first!</span></p>
+<a href="https://ocsigen.org/tuto/latest/manual/basics" target="_blank"><span>main documentation page</span></a><span> first!</span></p>
 <p><span>and look at each example in Ocsigen Start's template.</span></p>
 <p style="text-align: right;"><img alt="Ocsigen" src="ocsigen-bubbles-large.png" width="800px"/><br/>
 <span style="color: #aaa"><span>Slides powered by </span><a href="https://github.com/panglesd/slipshow"><span>Slipshow</span></a></span><span>.</span></p>

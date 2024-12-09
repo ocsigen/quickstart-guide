@@ -132,7 +132,6 @@ let%server init (name : string) =
    To prevent this, you need to attach them to some page element (here Dom_html.window)
    using function retain. *)
 
-
 let%client init _ = Lwt.return ()
 
 let%shared page name content =
@@ -170,9 +169,7 @@ let%shared () =
    (as Eliom_reference is a server-side function) *)
 let%server () =
   Eliom_registration.Action.register ~service:connection_service
-    (fun () (name : string) ->
-       let%lwt () = Eliom_reference.set username (Some name) in
-       init name)
+    (fun () (name : string) -> Eliom_reference.set username (Some name))
 
 let%server () =
   Eliom_registration.Action.register ~service:disconnection_service

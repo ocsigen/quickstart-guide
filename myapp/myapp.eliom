@@ -170,9 +170,7 @@ let%shared () =
    (as Eliom_reference is a server-side function) *)
 let%server () =
   Eliom_registration.Action.register ~service:connection_service
-    (fun () (name : string) ->
-       let%lwt () = Eliom_reference.set username (Some name) in
-       init name)
+    (fun () (name : string) -> Eliom_reference.set username (Some name))
 
 let%server () =
   Eliom_registration.Action.register ~service:disconnection_service

@@ -670,7 +670,9 @@ let%client () = print_endline "Hello"
 ```
 See the result in your browser's console.
 
-{pause up}
+<div style="display: flex; justify-content: space-around;">
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body>
 
 {#clser}
 >{.server}
@@ -686,8 +688,14 @@ See the result in your browser's console.
 >let%shared () = ...
 >```
 
-{pause up .center}
-<img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body style="text-align: center;">
+ <img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
+</div>
 
 {pause down-at-unpause=clientdown1}
 
@@ -763,9 +771,14 @@ On this example, you can see a few new concepts:
 
 {#clientdown3}
 
-{pause up}
-<img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="1200px"/>
-
+<div style="display: flex; justify-content: space-around;">
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body style="text-align: center;">
+ <img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="1200px"/>
+  </slip-body>
+</slip-slip>
+</div>
+ 
 {pause up}
 
 ## Client-side services

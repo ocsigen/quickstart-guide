@@ -2175,7 +2175,9 @@ let f () =
 <pre class="client"><code class="language-ocaml">let%client () = print_endline &quot;Hello&quot;
 </code></pre>
 <p><span>See the result in your browser's console.</span></p>
-<div up-at-unpause pause></div>
+<div style="display: flex; justify-content: space-around;">
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body>
 <div id="clser">
 <pre class="server"><code class="language-ocaml">let%server () = ...
 </code></pre>
@@ -2184,8 +2186,13 @@ let f () =
 <pre class="shared"><code class="language-ocaml">let%shared () = ...
 </code></pre>
 </div>
-<div class="center" up-at-unpause pause>
-<img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
+<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
+  <slip-body style="text-align: center;">
+ <img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
+  </slip-body>
+</slip-slip>
 </div>
 <div down-at-unpause=clientdown1 pause></div>
 <h3 id="injections-using-server-side-values-in-client-side-code"><a class="anchor" aria-hidden="true" href="#injections-using-server-side-values-in-client-side-code"></a><span>Injections: using server-side values in client side code</span></h3>

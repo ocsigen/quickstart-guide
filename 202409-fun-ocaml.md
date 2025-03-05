@@ -352,7 +352,7 @@ let () =
 >>{.encadré}
 >>>Services can return other types of content.
 >>>
->>>For example, we can return a file:
+>>>For example, we can return a file
 
 {.relative}
 >{.unstatic #regparam3 .server}
@@ -447,87 +447,66 @@ Go to [http://localhost:8080/foo](http://localhost:8080/foo) to test your progra
 
 {pause focus-at-unpause=servunit exec-at-unpause}
 ```slip-script
-document.querySelector("#servunit").classList.add("focused");
-return {undo : () => {document.querySelector("#servunit").classList.remove("focused")}};
+slip.set_class(document.querySelector("#servunit"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="servunit" unfocus-at-unpause="servunit" static-at-unpause="servparam" focus-at-unpause=servparam exec-at-unpause}
 ```slip-script
-document.querySelector("#servunit").classList.remove("focused");
-document.querySelector("#servparam").classList.add("focused");
-return {undo : () => {document.querySelector("#servunit").classList.add("focused");
-                      document.querySelector("#servparam").classList.remove("focused")}};
+slip.set_class(document.querySelector("#servunit"), "focused", false);
+slip.set_class(document.querySelector("#servparam"), "focused", true);
 ```
 
-{pause unstatic-at-unpause="servparam" unfocus-at-unpause="servparam" focus-at-unpause=regunit exec-at-unpause}
+{pause unstatic-at-unpause="servparamexpl" unfocus-at-unpause="servparam" focus-at-unpause=regunit exec-at-unpause}
 ```slip-script
-document.querySelector("#servparam").classList.remove("focused");
-document.querySelector("#regunit").classList.add("focused");
-return {undo : () => {document.querySelector("#servparam").classList.add("focused");
-                      document.querySelector("#regunit").classList.remove("focused");
-}};
+slip.set_class(document.querySelector("#servparam"), "focused", false);
+slip.set_class(document.querySelector("#regunit"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regunit" unfocus-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-document.querySelector("#regunit").classList.remove("focused");
-document.querySelector("#regparam").classList.add("focused");
-return {undo : () => {document.querySelector("#regunit").classList.add("focused");
-                      document.querySelector("#regparam").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regunit"), "focused", false);
+slip.set_class(document.querySelector("#regparam"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2 exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam").classList.remove("focused");
-document.querySelector("#regparam2").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam").classList.add("focused");
-                      document.querySelector("#regparam2").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam"), "focused", false);
+slip.set_class(document.querySelector("#regparam2"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam2" unfocus-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3 exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam2").classList.remove("focused");
-document.querySelector("#regparam3").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam2").classList.add("focused");
-                      document.querySelector("#regparam3").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam2"), "focused", false);
+slip.set_class(document.querySelector("#regparam3"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam3 regparamexpl" unfocus-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam3").classList.remove("focused");
-document.querySelector("#regparam").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam3").classList.add("focused");
-                      document.querySelector("#regparam").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam3"), "focused", false);
+slip.set_class(document.querySelector("#regparam"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4 exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam").classList.remove("focused");
-document.querySelector("#regparam4").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam").classList.add("focused");
-                      document.querySelector("#regparam4").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam"), "focused", false);
+slip.set_class(document.querySelector("#regparam4"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam4" unfocus-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam4").classList.remove("focused");
-document.querySelector("#regparam").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam4").classList.add("focused");
-                      document.querySelector("#regparam").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam4"), "focused", false);
+slip.set_class(document.querySelector("#regparam"), "focused", true);
 ```
 
 {pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5 exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam").classList.remove("focused");
-document.querySelector("#regparam5").classList.add("focused");
-return {undo : () => {document.querySelector("#regparam").classList.add("focused");
-                      document.querySelector("#regparam5").classList.remove("focused");}};
+slip.set_class(document.querySelector("#regparam"), "focused", false);
+slip.set_class(document.querySelector("#regparam5"), "focused", true);
 ```
 
 {pause down-at-unpause="tyxmlend" unfocus-at-unpause="regparam5" exec-at-unpause}
 ```slip-script
-document.querySelector("#regparam5").classList.remove("focused");
-return {undo : () => {document.querySelector("#regparam5").classList.add("focused");}};
+slip.set_class(document.querySelector("#regparam5"), "focused", false);
 ```
 
 {#servicesdown}

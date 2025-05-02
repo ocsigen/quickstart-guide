@@ -447,66 +447,76 @@ Go to [http://localhost:8080/foo](http://localhost:8080/foo) to test your progra
 
 {pause focus-at-unpause=servunit exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#servunit"), "focused", true);
+slip.setClass(document.querySelector("#servunit"), "focused", true);
 ```
 
-{pause unstatic-at-unpause="servunit" unfocus-at-unpause="servunit" static-at-unpause="servparam" focus-at-unpause=servparam exec-at-unpause}
+{pause unfocus-at-unpause="servunit" static-at-unpause="servparam" focus-at-unpause=servparam exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#servunit"), "focused", false);
-slip.set_class(document.querySelector("#servparam"), "focused", true);
+slip.setClass(document.querySelector("#servunit"), "focused", false);
+slip.setClass(document.querySelector("#servparam"), "focused", true);
+slip.setClass(document.querySelector("#servunit"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="servparamexpl" unfocus-at-unpause="servparam" focus-at-unpause=regunit exec-at-unpause}
+{pause unfocus-at-unpause="servparam" focus-at-unpause=regunit exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#servparam"), "focused", false);
-slip.set_class(document.querySelector("#regunit"), "focused", true);
+slip.setClass(document.querySelector("#servparam"), "focused", false);
+slip.setClass(document.querySelector("#regunit"), "focused", true);
+slip.setClass(document.querySelector("#servparamexpl"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regunit" unfocus-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+{pause unfocus-at-unpause="regunit" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regunit"), "focused", false);
-slip.set_class(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regunit"), "focused", false);
+slip.setClass(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regunit"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2 exec-at-unpause}
+{pause unfocus-at-unpause="regparam" static-at-unpause="regparam2" focus-at-unpause=regparam2 exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam"), "focused", false);
-slip.set_class(document.querySelector("#regparam2"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "focused", false);
+slip.setClass(document.querySelector("#regparam2"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam2" unfocus-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3 exec-at-unpause}
+{pause unfocus-at-unpause="regparam2" static-at-unpause="regparam3" focus-at-unpause=regparam3 exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam2"), "focused", false);
-slip.set_class(document.querySelector("#regparam3"), "focused", true);
+slip.setClass(document.querySelector("#regparam2"), "focused", false);
+slip.setClass(document.querySelector("#regparam3"), "focused", true);
+slip.setClass(document.querySelector("#regparam2"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam3 regparamexpl" unfocus-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+{pause unfocus-at-unpause="regparam3" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam3"), "focused", false);
-slip.set_class(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regparam3"), "focused", false);
+slip.setClass(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regparam3"), "unstatic", true);
+slip.setClass(document.querySelector("#regparamexpl"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4 exec-at-unpause}
+{pause unfocus-at-unpause="regparam" static-at-unpause="regparam4" focus-at-unpause=regparam4 exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam"), "focused", false);
-slip.set_class(document.querySelector("#regparam4"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "focused", false);
+slip.setClass(document.querySelector("#regparam4"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam4" unfocus-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
+{pause unfocus-at-unpause="regparam4" static-at-unpause="regparam" focus-at-unpause=regparam exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam4"), "focused", false);
-slip.set_class(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regparam4"), "focused", false);
+slip.setClass(document.querySelector("#regparam"), "focused", true);
+slip.setClass(document.querySelector("#regparam4"), "unstatic", true);
 ```
 
-{pause unstatic-at-unpause="regparam" unfocus-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5 exec-at-unpause}
+{pause unfocus-at-unpause="regparam" static-at-unpause="regparam5" focus-at-unpause=regparam5 exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam"), "focused", false);
-slip.set_class(document.querySelector("#regparam5"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "focused", false);
+slip.setClass(document.querySelector("#regparam5"), "focused", true);
+slip.setClass(document.querySelector("#regparam"), "unstatic", true);
 ```
 
 {pause down-at-unpause="tyxmlend" unfocus-at-unpause="regparam5" exec-at-unpause}
 ```slip-script
-slip.set_class(document.querySelector("#regparam5"), "focused", false);
+slip.setClass(document.querySelector("#regparam5"), "focused", false);
 ```
 
 {#servicesdown}
@@ -650,10 +660,9 @@ let%client () = print_endline "Hello"
 See the result in your browser's console.
 
 <div style="display: flex; justify-content: space-around;">
-<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
-  <slip-body>
+<div id="clser">
 
-{#clser}
+{style="zoom: 44%; width: 800px;"}
 >{.server}
 >```ocaml
 >let%server () = ...
@@ -667,16 +676,17 @@ See the result in your browser's console.
 >let%shared () = ...
 >```
 
-  </slip-body>
-</slip-slip>
-<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
-  <slip-body style="text-align: center;">
- <img id="clserimg" alt="Client-server code" src="client-server.svg" width="600px"/>
-  </slip-body>
-</slip-slip>
+</div>
+<div id="clserimg">
+ <img alt="Client-server code" src="client-server.svg" width="400px"/>
+</div>
 </div>
 
-{pause down-at-unpause=clientdown1}
+{pause focus-at-unpause=clser}
+
+{pause unfocus-at-unpause=clser focus-at-unpause=clserimg}
+
+{pause  unfocus-at-unpause=clserimg down-at-unpause=clientdown1}
 
 ### Injections: using server-side values in client side code
 
@@ -751,14 +761,14 @@ On this example, you can see a few new concepts:
 {#clientdown3}
 
 <div style="display: flex; justify-content: space-around;">
-<slip-slip style="width: 44%;" auto-enter scale="0.44" delay="1">
-  <slip-body style="text-align: center;">
- <img id="clserimg" alt="Client-server code" src="client-server-req.svg" width="1200px"/>
-  </slip-body>
-</slip-slip>
+<div id="clserimg2" style="text-align: center;">
+ <img alt="Client-server code" src="client-server-req.svg" width="400px"/>
+</div>
 </div>
  
-{pause up}
+{pause focus-at-unpause=clserimg2}
+
+{pause unfocus-at-unpause=clserimg2 up}
 
 ## Client-side services
 

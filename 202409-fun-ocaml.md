@@ -103,14 +103,13 @@ pre.tt code { padding-top: 0; }
 >> # Ocsigen<br/> Quickstart<br/> guide
 >>
 >>{.vspace}
->> Vincent Balat
+>> Writing a chat app
 >>{.vspace}
 >>
 >>{.vspace}
 >>
 >>{.vspace}
->>
->> FUN-OCaml - Berlin<br/> Sep 16-17 2024
+
 
 {.vspace}
 
@@ -540,7 +539,7 @@ let f () =
   Eliom_reference.set r (v + 1);
 ```
 
-{#eref2 .invisible .server}
+{#eref2 .unstatic .server}
 ```ocaml
 let r =
   Eliom_reference.eref
